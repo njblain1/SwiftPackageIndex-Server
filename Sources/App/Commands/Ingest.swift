@@ -160,6 +160,9 @@ func ingest(client: Client,
                 }
 
                 do {
+                    let result = result.mapError {
+                        AppError.ingestionError(pkg.model.id, $0.localizedDescription) as Error
+                    }
                     try await updatePackage(client: client, database: database, logger: logger, result: result, stage: .ingestion)
                 } catch {
                     logger.report(error: error)

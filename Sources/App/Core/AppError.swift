@@ -21,6 +21,7 @@ enum AppError: LocalizedError {
     case invalidPackageUrl(Package.Id?, _ url: String)
     case invalidPackageCachePath(Package.Id?, _ path: String)
     case cacheDirectoryDoesNotExist(Package.Id?, _ path: String)
+    case ingestionError(Package.Id?, _ message: String)
     case invalidRevision(Version.Id?, _ revision: String?)
     case metadataRequestFailed(Package.Id?, HTTPStatus, URI)
     case noValidVersions(Package.Id?, _ url: String)
@@ -36,6 +37,8 @@ enum AppError: LocalizedError {
                 return "Environment variable not set: \(value)"
             case let .invalidPackageUrl(id, value):
                 return "Invalid packge URL: \(value) (id: \(id))"
+            case let .ingestionError(id, message):
+                return "Ingestion error: \(message) (id: \(id))"
             case let .invalidPackageCachePath(id, value):
                 return "Invalid packge cache path: \(value) (id: \(id))"
             case let .cacheDirectoryDoesNotExist(id, value):
